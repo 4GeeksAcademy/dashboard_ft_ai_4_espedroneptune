@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A focused performance dashboard for social media affiliate sales." />
+    <title>Signal Desk | Creator performance</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  </head>
+  <body class="min-h-screen bg-[#f5f7f2] text-[#18211b] antialiased">
+    <div class="min-h-screen lg:flex">
+      <aside class="fixed inset-y-0 left-0 z-20 hidden w-64 shrink-0 flex-col overflow-y-auto border-r border-[#dbe2d9] bg-[#fbfcf8] px-5 py-6 lg:flex" aria-label="Primary navigation">
+        <a href="#overview" class="mb-10 flex items-center gap-3" aria-label="Signal Desk home">
+          <span class="grid size-10 place-items-center rounded-xl bg-[#1f5c49] text-lg font-bold text-white">S</span>
+          <span>
+            <span class="block text-sm font-bold tracking-tight">Signal Desk</span>
+            <span class="block text-xs text-[#718076]">Creator performance</span>
+          </span>
+        </a>
+        <nav class="flex-1" aria-label="Dashboard sections">
+          <p class="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#849187]">Workspace</p>
+          <div class="space-y-1">
+            <a data-nav-link="overview" href="#overview" class="nav-link flex items-center gap-3 rounded-xl bg-[#e4efe8] px-3 py-3 text-sm font-semibold text-[#1f5c49]">
+              <span class="text-base" aria-hidden="true">◈</span> Overview
+            </a>
+            <a data-nav-link="drivers" href="#drivers" class="nav-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[#647169] transition hover:bg-[#eef3ed] hover:text-[#1f5c49]">
+              <span class="text-base" aria-hidden="true">◒</span> Drivers
+            </a>
+            <a data-nav-link="operations" href="#operations" class="nav-link flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-medium text-[#647169] transition hover:bg-[#eef3ed] hover:text-[#1f5c49]">
+              <span class="text-base" aria-hidden="true">▤</span> Operations
+            </a>
+          </div>
+        </nav>
+        <div class="rounded-2xl bg-[#eef3ed] p-4">
+          <p class="text-xs font-semibold text-[#1f5c49]">Affiliate pulse</p>
+          <p class="mt-1 text-xs leading-5 text-[#718076]">Your best channel is currently Instagram.</p>
+          <a href="#platforms" class="mt-3 inline-flex text-xs font-bold text-[#1f5c49] hover:underline">View platform mix <span class="ml-1" aria-hidden="true">→</span></a>
+        </div>
+      </aside>
+
+      <main class="min-w-0 flex-1 pb-24 lg:ml-64 lg:pb-8">
+        <header class="border-b border-[#dbe2d9] bg-[#fbfcf8]/90 px-5 py-5 backdrop-blur-sm sm:px-8 lg:px-10 lg:py-7">
+          <div class="mx-auto max-w-[1500px]">
+            <div class="flex flex-col gap-5 sm:flex-row sm:items-start sm:justify-between">
+              <div>
+                <p class="mb-2 text-xs font-bold uppercase tracking-[0.18em] text-[#1f5c49]">Tuesday, September 30, 2026</p>
+                <h1 class="text-3xl font-bold tracking-[-0.04em] text-[#18211b] sm:text-4xl">Good morning, Alex.</h1>
+                <p class="mt-2 max-w-xl text-sm leading-6 text-[#718076]">A clear view of what is converting, where revenue is coming from, and what deserves your attention next.</p>
+              </div>
+              <div class="flex items-center gap-2">
+                <label for="period" class="sr-only">Reporting period</label>
+                <select id="period" class="rounded-xl border border-[#dbe2d9] bg-white px-3 py-2.5 text-sm font-semibold text-[#405047] shadow-sm outline-none ring-[#a8c9b6] focus:ring-2">
+                  <option value="30">Last 30 days</option>
+                  <option value="7">Last 7 days</option>
+                  <option value="90">Last 90 days</option>
+                </select>
+                <button type="button" id="refresh-button" class="grid size-11 place-items-center rounded-xl border border-[#dbe2d9] bg-white text-[#496057] shadow-sm transition hover:border-[#a8c9b6] hover:text-[#1f5c49]" aria-label="Refresh sample data" title="Refresh sample data">
+                  <span aria-hidden="true">↻</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </header>
+
+        <div class="mx-auto max-w-[1500px] space-y-8 px-5 py-7 sm:px-8 lg:space-y-10 lg:px-10 lg:py-9">
+          <section id="overview" class="scroll-mt-6" aria-labelledby="overview-heading">
+            <div class="mb-4 flex items-end justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#849187]">01 / Outcome</p>
+                <h2 id="overview-heading" class="mt-1 text-xl font-bold tracking-tight">At a glance</h2>
+              </div>
+              <p class="hidden text-xs text-[#849187] sm:block">Compared with previous period</p>
+            </div>
+            <div id="kpi-grid" class="grid gap-3 sm:grid-cols-2 xl:grid-cols-5"></div>
+          </section>
+
+          <section id="drivers" class="scroll-mt-6" aria-labelledby="drivers-heading">
+            <div class="mb-4 flex items-end justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#849187]">02 / Drivers</p>
+                <h2 id="drivers-heading" class="mt-1 text-xl font-bold tracking-tight">What is moving the outcome</h2>
+              </div>
+              <span class="rounded-full bg-[#e4efe8] px-3 py-1 text-xs font-semibold text-[#1f5c49]">Sample data</span>
+            </div>
+
+            <div class="grid gap-4 xl:grid-cols-12">
+              <article class="rounded-2xl border border-[#dbe2d9] bg-white p-5 shadow-[0_8px_30px_rgba(31,92,73,0.04)] xl:col-span-7" aria-labelledby="funnel-heading">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 id="funnel-heading" class="font-bold">Conversion journey</h3>
+                    <p class="mt-1 text-xs text-[#849187]">From reach to paid commission</p>
+                  </div>
+                  <span class="rounded-lg bg-[#f5f7f2] px-2 py-1 text-xs font-bold text-[#52665b]">3.8% CVR</span>
+                </div>
+                <div id="funnel-chart" class="mt-6 space-y-4"></div>
+              </article>
+
+              <article id="platforms" class="rounded-2xl border border-[#dbe2d9] bg-[#1f5c49] p-5 text-white shadow-[0_8px_30px_rgba(31,92,73,0.12)] xl:col-span-5" aria-labelledby="platform-heading">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 id="platform-heading" class="font-bold">Platform return</h3>
+                    <p class="mt-1 text-xs text-[#b8d1c0]">Revenue generated per €1 spent</p>
+                  </div>
+                  <span class="rounded-lg bg-white/10 px-2 py-1 text-xs font-bold text-[#d7eadc]">ROI</span>
+                </div>
+                <div id="platform-chart" class="mt-6 space-y-5"></div>
+              </article>
+
+              <article class="rounded-2xl border border-[#dbe2d9] bg-white p-5 shadow-[0_8px_30px_rgba(31,92,73,0.04)] xl:col-span-5" aria-labelledby="product-heading">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 id="product-heading" class="font-bold">Product commission</h3>
+                    <p class="mt-1 text-xs text-[#849187]">Which offers pay the bills?</p>
+                  </div>
+                  <span class="text-xs font-semibold text-[#1f5c49]">15% rate</span>
+                </div>
+                <div id="product-chart" class="mt-6 space-y-4"></div>
+              </article>
+
+              <article class="rounded-2xl border border-[#dbe2d9] bg-white p-5 shadow-[0_8px_30px_rgba(31,92,73,0.04)] xl:col-span-7" aria-labelledby="engagement-heading">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 id="engagement-heading" class="font-bold">Engagement by platform</h3>
+                    <p class="mt-1 text-xs text-[#849187]">Interactions divided by total reach</p>
+                  </div>
+                  <span class="rounded-lg bg-[#fff5d8] px-2 py-1 text-xs font-bold text-[#8a6418]">Healthy</span>
+                </div>
+                <div id="engagement-chart" class="mt-6 grid gap-4 sm:grid-cols-3"></div>
+              </article>
+            </div>
+          </section>
+
+          <section id="operations" class="scroll-mt-6" aria-labelledby="operations-heading">
+            <div class="mb-4 flex items-end justify-between gap-4">
+              <div>
+                <p class="text-xs font-bold uppercase tracking-[0.18em] text-[#849187]">03 / Operations</p>
+                <h2 id="operations-heading" class="mt-1 text-xl font-bold tracking-tight">Details worth acting on</h2>
+              </div>
+              <button type="button" id="details-button" class="hidden text-xs font-bold text-[#1f5c49] hover:underline sm:block">Show all activity <span aria-hidden="true">→</span></button>
+            </div>
+
+            <div class="grid gap-4 xl:grid-cols-12">
+              <article class="overflow-hidden rounded-2xl border border-[#dbe2d9] bg-white shadow-[0_8px_30px_rgba(31,92,73,0.04)] xl:col-span-8" aria-labelledby="product-table-heading">
+                <div class="flex items-center justify-between border-b border-[#edf0eb] px-5 py-4">
+                  <div>
+                    <h3 id="product-table-heading" class="font-bold">Product performance</h3>
+                    <p class="mt-1 text-xs text-[#849187]">Revenue, commission, and conversion by offer</p>
+                  </div>
+                  <span class="grid size-8 place-items-center rounded-lg bg-[#eef3ed] text-sm text-[#1f5c49]" aria-hidden="true">↗</span>
+                </div>
+                <div class="overflow-x-auto">
+                  <table class="w-full min-w-[580px] text-left text-sm">
+                    <caption class="sr-only">Product performance</caption>
+                    <thead class="bg-[#fbfcf8] text-xs font-bold uppercase tracking-wider text-[#849187]">
+                      <tr><th class="px-5 py-3" scope="col">Product</th><th class="px-4 py-3" scope="col">Sales</th><th class="px-4 py-3" scope="col">Revenue</th><th class="px-4 py-3" scope="col">Commission</th><th class="px-5 py-3 text-right" scope="col">CVR</th></tr>
+                    </thead>
+                    <tbody id="product-table" class="divide-y divide-[#edf0eb]"></tbody>
+                  </table>
+                </div>
+              </article>
+
+              <article class="rounded-2xl border border-[#dbe2d9] bg-[#fffaf0] p-5 xl:col-span-4" aria-labelledby="alerts-heading">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <h3 id="alerts-heading" class="font-bold">Needs attention</h3>
+                    <p class="mt-1 text-xs text-[#8c8068]">Signals from the last 30 days</p>
+                  </div>
+                  <span class="grid size-8 place-items-center rounded-lg bg-[#f8e6b5] text-[#8a6418]" aria-hidden="true">!</span>
+                </div>
+                <ul id="alerts-list" class="mt-5 space-y-4"></ul>
+              </article>
+
+              <article class="rounded-2xl border border-[#dbe2d9] bg-white p-5 xl:col-span-6" aria-labelledby="campaign-heading">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 id="campaign-heading" class="font-bold">Campaign pulse</h3>
+                    <p class="mt-1 text-xs text-[#849187]">Recent promotions and outcomes</p>
+                  </div>
+                  <span class="text-xs font-bold text-[#1f5c49]">3 active</span>
+                </div>
+                <ul id="campaign-list" class="mt-5 divide-y divide-[#edf0eb]"></ul>
+              </article>
+
+              <article class="rounded-2xl border border-[#dbe2d9] bg-white p-5 xl:col-span-6" aria-labelledby="ranking-heading">
+                <div class="flex items-center justify-between">
+                  <div>
+                    <h3 id="ranking-heading" class="font-bold">Top opportunities</h3>
+                    <p class="mt-1 text-xs text-[#849187]">Where the next lift may come from</p>
+                  </div>
+                  <span class="text-sm text-[#1f5c49]" aria-hidden="true">✦</span>
+                </div>
+                <ol id="ranking-list" class="mt-5 space-y-3"></ol>
+              </article>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+
+    <nav class="fixed inset-x-0 bottom-0 z-20 border-t border-[#dbe2d9] bg-[#fbfcf8]/95 px-3 py-2 backdrop-blur-md lg:hidden" aria-label="Mobile dashboard navigation">
+      <div class="mx-auto flex max-w-md items-center justify-around">
+        <a data-nav-link="overview" href="#overview" class="nav-link flex min-w-16 flex-col items-center gap-1 rounded-xl bg-[#e4efe8] px-3 py-2 text-[11px] font-bold text-[#1f5c49]"><span class="text-base" aria-hidden="true">◈</span>Overview</a>
+        <a data-nav-link="drivers" href="#drivers" class="nav-link flex min-w-16 flex-col items-center gap-1 rounded-xl px-3 py-2 text-[11px] font-medium text-[#718076]"><span class="text-base" aria-hidden="true">◒</span>Drivers</a>
+        <a data-nav-link="operations" href="#operations" class="nav-link flex min-w-16 flex-col items-center gap-1 rounded-xl px-3 py-2 text-[11px] font-medium text-[#718076]"><span class="text-base" aria-hidden="true">▤</span>Operations</a>
+      </div>
+    </nav>
+
+    <div id="toast" class="pointer-events-none fixed right-5 top-5 z-30 translate-y-[-12px] rounded-xl bg-[#1f5c49] px-4 py-3 text-sm font-semibold text-white opacity-0 shadow-lg transition duration-300" role="status" aria-live="polite"></div>
+
+    <script>
+      const currency = new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR", maximumFractionDigits: 0 });
+      const percent = new Intl.NumberFormat("en-IE", { style: "percent", maximumFractionDigits: 1 });
+
+      const sampleData = {
+        products: [
+          { name: "Product B", color: "#1f5c49", price: 120, sales: 96, reach: 21600, visits: 3490 },
+          { name: "Product C", color: "#e4a83a", price: 80, sales: 74, reach: 17800, visits: 2640 },
+          { name: "Product A", color: "#9bb9ca", price: 50, sales: 63, reach: 19200, visits: 2280 }
+        ],
+        platforms: [
+          { name: "Instagram", short: "IG", color: "#e07a5f", reach: 28200, interactions: 3540, conversions: 108, revenue: 9800, spend: 420 },
+          { name: "YouTube", short: "YT", color: "#d9534f", reach: 19400, interactions: 1760, conversions: 76, revenue: 6760, spend: 310 },
+          { name: "TikTok", short: "TT", color: "#1f5c49", reach: 21000, interactions: 1890, conversions: 49, revenue: 4030, spend: 285 }
+        ],
+        campaigns: [
+          { name: "Autumn essentials", platform: "Instagram", result: "€1,944 revenue", status: "Above target", tone: "green" },
+          { name: "Creator toolkit", platform: "YouTube", result: "€1,520 revenue", status: "On track", tone: "blue" },
+          { name: "Weekend reset", platform: "TikTok", result: "€820 revenue", status: "Needs lift", tone: "amber" }
+        ],
+        alerts: [
+          { title: "TikTok conversion rate dipped", body: "Down 1.4 pts week over week", tone: "amber" },
+          { title: "Product B is pulling ahead", body: "32% more sales than Product C", tone: "green" },
+          { title: "YouTube costs are efficient", body: "Best cost per conversion at €4.08", tone: "blue" }
+        ]
+      };
+
+      function commission(product) { return product.price * product.sales * 0.15; }
+      function revenue(product) { return product.price * product.sales; }
+      function total(list, key) { return list.reduce((sum, item) => sum + item[key], 0); }
+      function ratio(value, base) { return base ? value / base : 0; }
+      function escapeHTML(value) { return String(value).replace(/[&<>'"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[char]); }
+
+      function renderKpis() {
+        const commissionTotal = sampleData.products.reduce((sum, product) => sum + commission(product), 0);
+        const conversionTotal = total(sampleData.platforms, "conversions");
+        const reachTotal = total(sampleData.platforms, "reach");
+        const spendTotal = total(sampleData.platforms, "spend");
+        const revenueTotal = sampleData.products.reduce((sum, product) => sum + revenue(product), 0);
+        const engagementTotal = ratio(total(sampleData.platforms, "interactions"), reachTotal);
+        const bestPlatform = sampleData.platforms.reduce((best, platform) => ratio(platform.revenue, platform.spend) > ratio(best.revenue, best.spend) ? platform : best);
+        const cards = [
+          { label: "Commission generated", value: currency.format(commissionTotal), change: "+18.4%", note: "vs previous period", icon: "€", tone: "green" },
+          { label: "Total conversions", value: conversionTotal, change: "+12.8%", note: "sales attributed", icon: "↗", tone: "blue" },
+          { label: "Conversion rate", value: percent.format(ratio(conversionTotal, reachTotal)), change: "+0.6 pts", note: "conversions / reach", icon: "%", tone: "amber" },
+          { label: "Best platform ROI", value: `${bestPlatform.name} · ${ratio(bestPlatform.revenue, bestPlatform.spend).toFixed(1)}x`, change: "+0.9x", note: "revenue / costs", icon: "✦", tone: "green" },
+          { label: "Engagement rate", value: percent.format(engagementTotal), change: "+1.2 pts", note: "across all platforms", icon: "◎", tone: "rose" }
+        ];
+        document.querySelector("#kpi-grid").innerHTML = cards.map((card) => `
+          <article class="rounded-2xl border border-[#dbe2d9] bg-white p-4 shadow-[0_8px_30px_rgba(31,92,73,0.04)] sm:p-5">
+            <div class="flex items-start justify-between gap-3"><span class="grid size-9 place-items-center rounded-xl ${card.tone === "green" ? "bg-[#e4efe8] text-[#1f5c49]" : card.tone === "blue" ? "bg-[#e8f1f5] text-[#39718b]" : card.tone === "amber" ? "bg-[#fff5d8] text-[#8a6418]" : "bg-[#fae9e4] text-[#a85b4d]"} text-sm font-bold">${card.icon}</span><span class="text-xs font-bold text-[#2c8a62]">${card.change}</span></div>
+            <p class="mt-5 text-xs font-semibold text-[#849187]">${card.label}</p><p class="mt-1 text-2xl font-bold tracking-tight text-[#18211b]">${card.value}</p><p class="mt-1 text-xs text-[#849187]">${card.note}</p>
+          </article>`).join("");
+      }
+
+      function renderFunnel() {
+        const stages = [
+          { label: "Reach", value: total(sampleData.platforms, "reach"), display: "58.6k", color: "#dbe9de" },
+          { label: "Profile visits", value: 8410, display: "8.4k", color: "#b8d1c0" },
+          { label: "Product clicks", value: 5160, display: "5.2k", color: "#78a98c" },
+          { label: "Conversions", value: total(sampleData.platforms, "conversions"), display: "233", color: "#1f5c49" }
+        ];
+        const max = stages[0].value;
+        document.querySelector("#funnel-heading").nextElementSibling.textContent = `Reach to conversion · ${percent.format(ratio(stages[3].value, stages[0].value))}`;
+        document.querySelector("#funnel-chart").innerHTML = stages.map((stage) => `<div class="grid grid-cols-[94px_1fr_50px] items-center gap-3"><span class="text-xs font-semibold text-[#52665b]">${stage.label}</span><div class="h-3 overflow-hidden rounded-full bg-[#edf0eb]"><div class="h-full rounded-full" style="width:${Math.max(12, (stage.value / max) * 100)}%;background:${stage.color}"></div></div><span class="text-right text-xs font-bold text-[#18211b]">${stage.display}</span></div>`).join("");
+      }
+
+      function renderPlatforms() {
+        const maxROI = Math.max(...sampleData.platforms.map((platform) => ratio(platform.revenue, platform.spend)));
+        document.querySelector("#platform-chart").innerHTML = sampleData.platforms.map((platform) => {
+          const roi = ratio(platform.revenue, platform.spend);
+          return `<div><div class="mb-2 flex items-center justify-between text-xs"><span class="font-semibold text-[#d7eadc]">${platform.name}</span><span class="font-bold text-white">${roi.toFixed(1)}x</span></div><div class="h-2 overflow-hidden rounded-full bg-white/15"><div class="h-full rounded-full bg-[#f0c76a]" style="width:${(roi / maxROI) * 100}%"></div></div><div class="mt-1 flex justify-between text-[11px] text-[#b8d1c0]"><span>${currency.format(platform.spend)} cost</span><span>${platform.conversions} conversions</span></div></div>`;
+        }).join("");
+      }
+
+      function renderProducts() {
+        const maxCommission = Math.max(...sampleData.products.map(commission));
+        document.querySelector("#product-chart").innerHTML = sampleData.products.map((product) => `<div class="flex items-center gap-3"><span class="grid size-9 shrink-0 place-items-center rounded-xl text-xs font-bold text-white" style="background:${product.color}">${product.name.replace("Product ", "")}</span><div class="min-w-0 flex-1"><div class="mb-1 flex justify-between gap-2 text-xs"><span class="font-semibold">${product.name}</span><span class="font-bold">${currency.format(commission(product))}</span></div><div class="h-2 overflow-hidden rounded-full bg-[#edf0eb]"><div class="h-full rounded-full" style="width:${(commission(product) / maxCommission) * 100}%;background:${product.color}"></div></div><p class="mt-1 text-[11px] text-[#849187]">${product.sales} sales · ${currency.format(product.price)} offer</p></div></div>`).join("");
+      }
+
+      function renderEngagement() {
+        const maxRate = Math.max(...sampleData.platforms.map((platform) => ratio(platform.interactions, platform.reach)));
+        document.querySelector("#engagement-chart").innerHTML = sampleData.platforms.map((platform) => {
+          const rate = ratio(platform.interactions, platform.reach);
+          return `<div class="rounded-xl bg-[#fbfcf8] p-3"><div class="flex items-center justify-between"><span class="grid size-8 place-items-center rounded-lg text-xs font-bold text-white" style="background:${platform.color}">${platform.short}</span><span class="text-xs font-bold text-[#1f5c49]">${percent.format(rate)}</span></div><div class="mt-4 flex h-16 items-end gap-1" aria-label="${platform.name} engagement rate ${percent.format(rate)}"><span class="w-1/4 rounded-t bg-[#dbe9de]" style="height:${Math.max(30, (rate / maxRate) * 72)}%"></span><span class="w-1/4 rounded-t bg-[#a8c9b6]" style="height:${Math.max(40, (rate / maxRate) * 86)}%"></span><span class="w-1/4 rounded-t bg-[#78a98c]" style="height:${Math.max(22, (rate / maxRate) * 56)}%"></span><span class="w-1/4 rounded-t bg-[#1f5c49]" style="height:${Math.max(35, (rate / maxRate) * 100)}%"></span></div><p class="mt-3 text-[11px] text-[#849187]">${platform.interactions.toLocaleString()} interactions</p></div>`;
+        }).join("");
+      }
+
+      function renderProductTable() {
+        document.querySelector("#product-table").innerHTML = sampleData.products.map((product) => `<tr class="text-[#52665b]"><th class="px-5 py-4 font-semibold text-[#18211b]" scope="row"><span class="mr-2 inline-block size-2 rounded-full" style="background:${product.color}"></span>${product.name}</th><td class="px-4 py-4">${product.sales}</td><td class="px-4 py-4 font-semibold">${currency.format(revenue(product))}</td><td class="px-4 py-4 font-bold text-[#1f5c49]">${currency.format(commission(product))}</td><td class="px-5 py-4 text-right">${percent.format(ratio(product.sales, product.visits))}</td></tr>`).join("");
+      }
+
+      function renderAlerts() {
+        const tones = { amber: "bg-[#f8e6b5] text-[#8a6418]", green: "bg-[#dbe9de] text-[#1f5c49]", blue: "bg-[#e0edf2] text-[#39718b]" };
+        document.querySelector("#alerts-list").innerHTML = sampleData.alerts.map((alert) => `<li class="flex gap-3"><span class="mt-0.5 grid size-6 shrink-0 place-items-center rounded-lg ${tones[alert.tone]} text-xs font-bold">${alert.tone === "green" ? "↑" : alert.tone === "blue" ? "i" : "!"}</span><div><p class="text-sm font-bold text-[#3c3b31]">${alert.title}</p><p class="mt-1 text-xs leading-5 text-[#8c8068]">${alert.body}</p></div></li>`).join("");
+      }
+
+      function renderCampaigns() {
+        const statusStyles = { "Above target": "text-[#1f5c49] bg-[#e4efe8]", "On track": "text-[#39718b] bg-[#e8f1f5]", "Needs lift": "text-[#8a6418] bg-[#fff5d8]" };
+        document.querySelector("#campaign-list").innerHTML = sampleData.campaigns.map((campaign) => `<li class="flex items-center justify-between gap-3 py-3 first:pt-0 last:pb-0"><div class="min-w-0"><p class="truncate text-sm font-bold">${campaign.name}</p><p class="mt-1 text-xs text-[#849187]">${campaign.platform} · ${campaign.result}</p></div><span class="shrink-0 rounded-full px-2 py-1 text-[10px] font-bold ${statusStyles[campaign.status]}">${campaign.status}</span></li>`).join("");
+      }
+
+      function renderRankings() {
+        const ranking = ["Scale Product B on Instagram", "Retarget YouTube viewers with Product C", "Test a stronger TikTok call-to-action"];
+        document.querySelector("#ranking-list").innerHTML = ranking.map((item, index) => `<li class="flex items-center gap-3 rounded-xl bg-[#fbfcf8] p-3"><span class="grid size-7 shrink-0 place-items-center rounded-lg bg-[#e4efe8] text-xs font-bold text-[#1f5c49]">0${index + 1}</span><span class="text-sm font-semibold text-[#405047]">${item}</span><span class="ml-auto text-[#9aaba0]" aria-hidden="true">→</span></li>`).join("");
+      }
+
+      function setActiveSection(section) {
+        document.querySelectorAll("[data-nav-link]").forEach((link) => {
+          const isActive = link.dataset.navLink === section;
+          link.classList.toggle("bg-[#e4efe8]", isActive);
+          link.classList.toggle("text-[#1f5c49]", isActive);
+          link.classList.toggle("font-bold", isActive);
+          link.classList.toggle("font-medium", !isActive);
+          link.classList.toggle("text-[#647169]", !isActive && link.closest("aside"));
+          link.classList.toggle("text-[#718076]", !isActive && link.closest("nav:not([aria-label='Primary navigation'])"));
+        });
+      }
+
+      function showToast(message) {
+        const toast = document.querySelector("#toast");
+        toast.textContent = message;
+        toast.classList.remove("opacity-0", "translate-y-[-12px]");
+        window.setTimeout(() => toast.classList.add("opacity-0", "translate-y-[-12px]"), 1800);
+      }
+
+      function renderDashboard() {
+        renderKpis(); renderFunnel(); renderPlatforms(); renderProducts(); renderEngagement(); renderProductTable(); renderAlerts(); renderCampaigns(); renderRankings();
+      }
+
+      document.querySelectorAll("[data-nav-link]").forEach((link) => link.addEventListener("click", () => setActiveSection(link.dataset.navLink)));
+      document.querySelector("#period").addEventListener("change", (event) => showToast(`Showing sample data for the last ${event.target.value} days`));
+      document.querySelector("#refresh-button").addEventListener("click", () => { renderDashboard(); showToast("Sample dashboard refreshed"); });
+      document.querySelector("#details-button").addEventListener("click", () => showToast("All activity is represented in this sample view"));
+
+      const sectionObserver = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActiveSection(entry.target.id); }), { rootMargin: "-25% 0px -60% 0px" });
+      document.querySelectorAll("main section[id]").forEach((section) => sectionObserver.observe(section));
+      renderDashboard();
+    </script>
+  </body>
+</html>
